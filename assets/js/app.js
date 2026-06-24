@@ -6,6 +6,7 @@ const bodyControl = document.getElementById('body');
 const userIdControl = document.getElementById('userId');
 const addbtn = document.getElementById('addbtn');
 const updatebtn = document.getElementById('updatebtn');
+const spinner= document.getElementById('spinner')
 
 
 const BASE_URL = `https://jsonplaceholder.typicode.com`;
@@ -13,12 +14,28 @@ const POST_URL = `${BASE_URL}/posts`
 const postContainer= document.getElementById('postContainer')
 
 
+function tooltip(){
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+}
+
+function snackbar(msg, icon){
+    Swal.fire({
+        title:msg,
+        icon:icon,
+        timer:3000
+    })
+}
+
+
 function createPostsCards(arr){
     let result = '';
     arr.forEach(post =>{
 result+= `<div class="col-md-3 mb-3" id="${post.id}">
         <div class="card h-100">
-            <div class="card-header">
+            <div class="card-header"  data-toggle="tooltip" data-placement="top" title="${post.title}">
+
                 <h3>${post.title}</h3>
             </div>
             <div class="card-body">  <p> ${post.body}</p>
@@ -39,7 +56,8 @@ result+= `<div class="col-md-3 mb-3" id="${post.id}">
 `
 
     })
-    postContainer.innerHTML= result
+    postContainer.innerHTML= result;
+    tooltip()
 
 }
 
@@ -96,7 +114,8 @@ xhr.onload= function(){
         col.className= "col-md-3 mb-3";
         col.id= res.id;
         col.innerHTML= ` <div class="card h-100">
-            <div class="card-header">
+            <div class="card-header"  data-toggle="tooltip" data-placement="top" title="${postObj.title}">
+  
                 <h3>${postObj.title}</h3>
             </div>
             <div class="card-body">  <p> ${postObj.body}</p>
@@ -105,11 +124,12 @@ xhr.onload= function(){
                 <button class="btn btn-sm btn-primary">Edit</button>
                 <button class="btn btn-sm btn-danger">Remove</button>
 
-            </div>
+                </div>
            
         </div>`
 
         postContainer.prepend(col);
+        tooltip()
         postForm.reset()
 
 spinner.classList.add('d-none')
@@ -146,6 +166,8 @@ spinner.classList.add('d-none')
             addbtn.classList.add('d-none')
             updatebtn.classList.remove('d-none')
 spinner.classList.add('d-none')
+
+postForm
 
 
         }else{
