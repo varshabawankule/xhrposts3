@@ -181,7 +181,8 @@ spinner.classList.add('d-none')
 
 function onUpdate(){
     let UPDATE_ID = localStorage.getItem('EDIT_ID')
-    localStorage.removeItem('EDIT_ID')
+    let UPDATE_URL = `${BASE_URL}/posts/${UPDATE_ID}`
+    
 
     let updateObj={ 
         title: titleControl.value ,
@@ -190,7 +191,6 @@ function onUpdate(){
         
     }
 
-    let UPDATE_URL = `${BASE_URL}/posts/${UPDATE_ID}`
 spinner.classList.remove('d-none')
 
 
@@ -213,6 +213,8 @@ let res= JSON.parse(xhr.response)
 spinner.classList.add('d-none')
 
         }else{
+
+            
 spinner.classList.add('d-none')
 
 
